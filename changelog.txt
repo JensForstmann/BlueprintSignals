@@ -1,0 +1,155 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: 31. 01. 2020
+  Changes:
+    - Update for Factorio 0.18
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.6
+Date: 01. 31. 2020
+  Bugfixes:
+    - Fix possible assorted crashes with auto-landfill when adding Blueprint Extensions to an existing save, for real this time.
+    - Fix accidental very spammy debug logging when auto-landfilling a blueprint.
+    - Fix crash when starting an in-game tutorial.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.5
+Date: 16. 04. 2019
+  Bugfixes:
+    - Fix yet another possible crash when adding Blueprint Extensions to an existing save.
+    - Fix issue with diagonal straight rails and rail signals not being landfilled correctly.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.4
+Date: 15. 04. 2019
+  Bugfixes:
+    - Fix mod changelog being broken since 0.4.0
+    - Fix crash on first time being added to an existing save
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.3
+Date: 01. 04. 2019
+  Bugfixes:
+    - Fix another crash on loading a save that had an old version of Blueprint Extensions (only on some systems)
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.2
+Date: 01. 04. 2019
+  Bugfixes:
+    - Fix another crash on loading a save that had an old version of Blueprint Extensions (only on some systems)
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.1
+Date: 01. 04. 2019
+  Bugfixes:
+    - Fix crash on loading a save that had an old version of Blueprint Extensions.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.4.0
+Date: 01. 04. 2019
+  New features:
+    - Add support for landfilling every tile of a blueprint that needs one.
+
+  Changes:
+    - Removed code that disabled blueprint flipping and mirroring when a competing mod was installed.
+      Blueprint Extensions should have been out long enough by now to justify not needing two mods.  ;)
+    - Support the shortcut bar.  Add shortcuts for all operations (except nudge/snap), enabled when a blueprint is in
+      your hand.
+    - Add a button UI that appears while a blueprint is held to perform all blueprint operations.  The shortcut bar is
+      pretty limited, so this gives you an alternative.  Individual buttons can be turned off in mod settings; the
+      entire button bar is hidden if you turn off all buttons.
+    - Substantially overhauled internal event handling code.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.3.2
+Date: 02. 03. 2019
+  Bugfixes:
+    - Fix blueprint mirroring buttons not appearing when enabled in a new save until the mod configuration changed.
+    - Fix crash involving blueprint mirroring buttons in a new save when they were disabled.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.3.1
+Date: 26. 02. 2019
+  Changes:
+    - Add blueprint nudging.  SHIFT + arrow-on-numpad will 'nudge' a blueprint 1 tile in the selected direction.
+      (Blueprints with rails will be nudged 2 tiles.)
+  Bugfixes:
+    - Fix default keybinds for mirroring
+
+---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 26. 02. 2019
+  Changes:
+    - Update for Factorio 0.17
+    - Overhaul buttons for blueprint flipping to a more sane implementation.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.5
+Date: 18. 10. 2018
+  Changes:
+    - Mirroring blueprints will now mirror fluid recipes if GDIW (Gah! DarnItWater!) is installed.
+      This means mirroring a refinery blueprint will not break fluid inputs if using that mod.
+      This can be disabled on a per-player basis in mod settings.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+Date: 16. 10. 2018
+  Bugfixes:
+    - Fix crash on case-sensitive filesystems (i.e. not Windows).  Thanks to Omnifarious for the report.
+    - Fix incorrect date in changelog.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.3
+Date: 16. 10. 2018
+  Bugfixes:
+    - Changed the default wireswap keybind to CTRL + ALT + W instead of SHIFT + W, as the latter would frequently
+      interfere with movement.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+Date: 14. 10. 2018
+  Additions:
+    - You can now swap wire colors of a blueprint with SHIFT + W
+    - You can now rotate a blueprint with CONTROL + ALT + R.  Unlike normal rotation, this modifies the actual
+      blueprint and can be useful if you want to have all the blueprints in a book rotated the same direction.
+  Changes:
+    - When updating a blueprint, the blueprint is now cleared from the cursor (if there's room) while configuring it.
+      This allows you to change blueprint icons without them all becoming icons of blueprints.
+      When you finish configuring the blueprint, the blueprint will be moved back to the cursor.
+
+      This more closely reflects vanilla blueprint behavior.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.1
+Date: 24. 04. 2018
+  Bugfixes:
+    - Actually flip splitter priorities upon mirroring like we said we would.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 23. 04. 2018
+  Additions:
+    - Added and reworked the blueprint flipping and turning functionality in the Blueprint Flipper and Turner mod,
+      including a fix to priority splitters.
+        * This functionality is disabled if Blueprint Flipper and Turner is enabled to avoid possible conflicts.
+        * The GUI buttons for flipping blueprints can be disabled in mod settings.  Note this has no effect if
+          Blueprint Flipper and Turner is disabled.
+  Changes:
+    - Internal reworking of code to be better organized.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 17. 12. 2017
+  Bugfixes:
+    - Fixed crash when blueprint-updating an empty area.
+  Changes:
+    - Blueprints can now be "versioned": Updating a blueprint with a label like "Train Station v.1" will make the
+      updated blueprint default to "Train Station v.2".  By default, normal drag will update a version number if one is
+      present, shift-drag will append "v.2" if no version number is present.  These options can be changed in mod
+      settings.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 17. 12. 2017
+  Changes:
+    - First release.
