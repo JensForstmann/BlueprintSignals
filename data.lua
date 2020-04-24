@@ -7,7 +7,7 @@ local actions = require('actions')
 
 local function icon(s, x, y)
     return {
-        filename = "__BlueprintExtensions__/graphics/shortcut-bar-buttons-" .. s .. ".png",
+        filename = "__BlueprintSignals__/graphics/shortcut-bar-buttons-" .. s .. ".png",
         priority = "extra-high-no-scale",
         flags = { "icon" },
         size = s,
@@ -46,7 +46,7 @@ for name, action in pairs(actions) do
                 small_icon = icon(24, action.icon, 1),
                 disabled_small_icon = icon(24, action.icon, 0),
                 style = action.shortcut_style,
-                order = "b[blueprints]-x[bpex]-" .. action.order
+                order = "b[blueprints]-s[bps]-" .. action.order
             }
         }
     end
@@ -55,7 +55,7 @@ end
 data:extend({
     {
         type = "custom-input",
-        name = "BlueprintExtensions_cleared_cursor_proxy",
+        name = "BlueprintSignals_cleared_cursor_proxy",
         key_sequence = "",
         linked_game_control = "clean-cursor"
     }

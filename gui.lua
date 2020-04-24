@@ -1,5 +1,5 @@
+local Util    = require('util')
 local actions = require('actions')
-local Util = require('util')
 
 local GUI = {}
 
@@ -14,31 +14,76 @@ table.sort(sorted_actions, function(a, b) return a.order < b.order end)
 GUI.sorted_actions = sorted_actions
 
 
+-- function GUI.setup(player)
+    -- local flow = mod_gui.get_frame_flow(player)
+    -- if flow.BPEX_Button_Flow then
+        -- flow.BPEX_Button_Flow.destroy()
+    -- end
+    -- local parent
+
+    -- for _, action in ipairs(sorted_actions) do
+        -- if action.icon and player.mod_settings[action.visibility_setting].value then
+            -- if not parent then
+                -- parent = flow.add {
+                    -- type = "flow",
+                    -- name = "BPEX_Button_Flow",
+                    -- enabled = true,
+                    -- style = "slot_table_spacing_vertical_flow",
+                    -- direction = "vertical"
+                -- }
+            -- end
+            -- button = parent.add{
+                -- name = action.name,
+                -- type = "sprite-button",
+                -- style = (action.shortcut_style and "shortcut_bar_button_" .. action.shortcut_style) or "shortcut_bar_button",
+                -- sprite = action.name,
+                -- tooltip = { "controls." .. action.name },
+                -- enabled = true,
+            -- }
+        -- end
+    -- end
+    -- GUI.update_visibility(player, true)
+
+    -- return parent  -- Might be nil if never created.
+-- end
+
 function GUI.setup(player)
     local flow = mod_gui.get_frame_flow(player)
-    if flow.BPEX_Button_Flow then
-        flow.BPEX_Button_Flow.destroy()
-    end
     local parent
+    -- If BlueprintExtensions is installed, we want to append to its button flow and update only our own buttons. 
+    -- if BlueprintExtensions is not installed, then we just create our own BPEX_Button_Flow
+    if flow.BPEX_Button_Flow then
+        if not game.active_mods["BlueprintExtensions"] then
+            flow.BPEX_Button_Flow.destroy()
+        end
+    end
+    
+    if not flow.BPEX_Button_Flow then
+        flow.add {
+            type = "flow",
+            name = "BPEX_Button_Flow",
+            enabled = true,
+            style = "slot_table_spacing_vertical_flow",
+            direction = "vertical"
+        }
+    end
+    local parent = flow.BPEX_Button_Flow
+
+    for _, action in ipairs(sorted_actions) do
+        if parent[action.name] then
+            parent[action.name].destroy()
+        end
+    end
 
     for _, action in ipairs(sorted_actions) do
         if action.icon and player.mod_settings[action.visibility_setting].value then
-            if not parent then
-                parent = flow.add {
-                    type = "flow",
-                    name = "BPEX_Button_Flow",
-                    enabled = true,
-                    style = "slot_table_spacing_vertical_flow",
-                    direction = "vertical"
-                }
-            end
-            button = parent.add{
-                name = action.name,
-                type = "sprite-button",
-                style = (action.shortcut_style and "shortcut_bar_button_" .. action.shortcut_style) or "shortcut_bar_button",
-                sprite = action.name,
-                tooltip = { "controls." .. action.name },
-                enabled = true,
+            local button = parent.add{
+                name    = action.name
+               ,type    = "sprite-button"
+               ,style   = (action.shortcut_style and "shortcut_bar_button_" .. action.shortcut_style) or "shortcut_bar_button"
+               ,sprite  = action.name
+               ,tooltip = { "controls." .. action.name }
+               ,enabled = true
             }
         end
     end
@@ -46,7 +91,6 @@ function GUI.setup(player)
 
     return parent  -- Might be nil if never created.
 end
-
 
 function GUI.update_visibility(player, force)
     local pdata = global.playerdata[player.index]

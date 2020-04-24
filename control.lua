@@ -5,13 +5,8 @@ local GUI = require('gui')
 
 
 local modules = {
-    Snap = require('modules/snap'),
-    Updater = require('modules/updater'),
-    Flip = require('modules/flip'),
-    Wireswap = require('modules/wireswap'),
-    Rotate = require('modules/rotate'),
     Tempprint = require('modules/tempprint'),
-    Landfill = require('modules/landfill')
+    Signals   = require('modules/signals'),
 }
 
 
@@ -84,6 +79,9 @@ script.on_init(function()
     -- FIXME: Update all gui and shortcut bars.
     init_globals()
     call_module_methods('on_init')
+    for _,player in pairs(game.players) do
+        GUI.setup(player)
+    end
 end)
 
 
@@ -94,6 +92,9 @@ script.on_configuration_changed(function(data)
     -- FIXME: Update all gui and shortcut bars.
     init_globals()
     call_module_methods('on_configuration_changed', data)
+    for _,player in pairs(game.players) do
+        GUI.setup(player)
+    end
 end)
 
 
@@ -122,19 +123,6 @@ add_event_handler(
         defines.events.on_player_cursor_stack_changed,
     function(event) GUI.update_visibility(game.players[event.player_index]) end
 )
-
-
-add_event_handler(defines.events.on_runtime_mod_setting_changed, function(event)
-    if not (
-            event.setting_type == 'runtime-per-user'
-            and string.find(event.setting, "BlueprintExtensions_show-", 1, true) == 1
-    ) then
-        return
-    end
-
-    GUI.setup(game.players[event.player_index])
-    call_module_methods('on_runtime_mod_setting_changed', event)
-end)
 
 
 add_event_handler(defines.events.on_player_created, function(event)

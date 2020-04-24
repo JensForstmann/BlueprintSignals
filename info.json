@@ -1,11 +1,11 @@
 {
-    "name": "BlueprintExtensions",
-    "version": "0.5.0",
-    "title": "Blueprint Extensions",
-    "author": "Dewin",
-    "contact": "https://github.com/dewiniaid/BlueprintExtensions",
-    "homepage": "https://github.com/dewiniaid/BlueprintExtensions",
+    "name": "BlueprintSignals",
+    "version": "0.1.0",
+    "title": "Blueprint Signals",
+    "author": "GaticusHax",
+    "contact": "https://github.com/Haxtorio/BlueprintSignals",
+    "homepage": "https://github.com/Haxtorio/BlueprintSignals",
     "factorio_version": "0.18",
-    "dependencies": ["base >= 0.18", "? GDIW"],
-    "description": "Adds tools for updating and placing blueprints."
+    "dependencies": ["base >= 0.18", "(?) BlueprintExtensions >= 0.5"],
+    "description": "Read a blueprint and generate a set of combinators containing the item signals and counts."
 }
