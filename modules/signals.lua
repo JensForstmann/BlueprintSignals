@@ -18,6 +18,23 @@ local function map_signals( map )
     return signals
 end
 
+local function add_connections( player, connections, other_entity_number )
+    connections          = connections or {}
+
+    connections[1]       = connections[1] or {}
+    connections[1].red   = connections[1].red   or {}
+    connections[1].green = connections[1].green or {}
+
+    if player.mod_settings["BlueprintSignals_connect-red"].value then
+        connections[1].red[  #connections[1].red  +1] = {entity_id=other_entity_number}
+    end
+    if player.mod_settings["BlueprintSignals_connect-green"].value then
+        connections[1].green[#connections[1].green+1] = {entity_id=other_entity_number}
+    end
+    
+    return connections
+end
+
 function Signals.blueprint_to_signals(player, event, action)
     local bp = Util.get_blueprint( player.cursor_stack )
     if not (bp and bp.is_blueprint_setup()) then
@@ -108,8 +125,13 @@ function Signals.blueprint_to_signals(player, event, action)
            ,position = { x = c - math.ceil(cCount/2), y = 0 }
            ,control_behavior = { filters = filters }
         }
+        if c > 1 then -- connect with previous combinator
+            local b = c - 1
+            entities[b].connections = add_connections( player, entities[b].connections, entities[c].entity_number )
+            entities[c].connections = add_connections( player, entities[c].connections, entities[b].entity_number )
+        end
     end
-
+    
     local name  = bp.name
     local icons = bp.blueprint_icons
     local label = bp.label

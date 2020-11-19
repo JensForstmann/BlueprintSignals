@@ -1,5 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2020.11.18
+  Changes:
+    - Updated for Factorio 1.0
+
+  Bug Fixes:
+    - Fix crash when trying to create a new blueprint book.
+      issue [#1](https://github.com/Haxtorio/BlueprintSignals/issues/1)
+
+  Features:
+    - A group of combinators will now be connected with red and green wire.
+      New configuration options have been added to customize which wires will be used to connect combinators.
+      The default behaviour is to connect combinators with both wires.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.0
-Date: 23. 04. 2020
+Date: 2020.04.23
   Changes:
     - Initial release.
