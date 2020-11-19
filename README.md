@@ -22,4 +22,4 @@ If you encounter a bug or have a suggestion, please [submit an issue on github](
 ## Credits  
   - deniwiaid (author of BlueprintExtensions)  
     I ripped a lot of the code for this mod from bpex and learned from the rest.
-  - thanks to smartguy1196 for fixing a crash when creating a new blueprint book n empty book.
+  - thanks to smartguy1196 for fixing a crash when creating a new blueprint book.
