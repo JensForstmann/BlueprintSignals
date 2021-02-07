@@ -15,7 +15,7 @@ A new blueprint containing one or more constant combinators will be generated, h
 unique signals for the blueprint items and counts.
 
 ## Contact
-If you encounter a bug or have a suggestion, please [submit an issue on github]().  
+If you encounter a bug or have a suggestion, please [submit an issue on github](https://github.com/Haxtorio/BlueprintSignals/issues).  
 
 
 
