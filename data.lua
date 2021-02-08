@@ -57,6 +57,6 @@ data:extend({
         type = "custom-input",
         name = "BlueprintSignals_cleared_cursor_proxy",
         key_sequence = "",
-        linked_game_control = "clean-cursor"
+        linked_game_control = "clear-cursor"
     }
 })

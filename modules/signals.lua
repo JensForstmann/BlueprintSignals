@@ -137,7 +137,7 @@ function Signals.blueprint_to_signals(player, event, action)
     local label = bp.label
     local color = bp.label_color
     
-    if not player.clean_cursor() then
+    if not player.clear_cursor() then
         player.print( "[bps] Error: Unable to clear the cursor.")
         return
     end
