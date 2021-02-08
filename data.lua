@@ -42,9 +42,9 @@ for name, action in pairs(actions) do
                 action = "lua",
                 toggleable = action.toggleable or false,
                 icon = icon(32, action.icon, 1),
-                disabled_icon = icon(32, action.icon, 0),
+                disabled_icon = icon(32, action.icon, 1),
                 small_icon = icon(24, action.icon, 1),
-                disabled_small_icon = icon(24, action.icon, 0),
+                disabled_small_icon = icon(24, action.icon, 1),
                 style = action.shortcut_style,
                 order = "b[blueprints]-s[bps]-" .. action.order
             }
