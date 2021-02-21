@@ -73,12 +73,12 @@ function Signals.blueprint_to_signals(player, event, action)
                 item = { name = item, count = game.item_prototypes[item].stack_size }
             end
             map[item.name] = (map[item.name] or 0) + item.count
-			if entity.items then
-				for item, count in pairs(entity.items) do
-					mCount = mCount + count
-					map[item] = (map[item] or 0) + count
-				end
-			end
+            if entity.items then
+                for item, count in pairs(entity.items) do
+                    mCount = mCount + count
+                    map[item] = (map[item] or 0) + count
+                end
+            end
         end
     end
     
@@ -102,7 +102,7 @@ function Signals.blueprint_to_signals(player, event, action)
     
     -- player.clear_console()
     -- player.print( "Entities: "    .. eCount )
-    -- player.print( "Modules: "    .. mCount )
+    -- player.print( "Modules: "     .. mCount )
     -- player.print( "Tiles: "       .. tCount )
     -- player.print( "Combinators: " .. cCount )
     -- player.print( "----------" )
