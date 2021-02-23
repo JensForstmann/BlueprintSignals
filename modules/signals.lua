@@ -61,7 +61,7 @@ function Signals.blueprint_to_signals(player, event, action)
     local map = {}
 
     local eCount = 0
-    local mCount = 0
+    local modCount = 0
     local tCount = 0
 
     if entities then
@@ -75,7 +75,7 @@ function Signals.blueprint_to_signals(player, event, action)
             map[item.name] = (map[item.name] or 0) + item.count
             if entity.items then
                 for item, count in pairs(entity.items) do
-                    mCount = mCount + count
+                    modCount = modCount + count
                     map[item] = (map[item] or 0) + count
                 end
             end
@@ -101,10 +101,10 @@ function Signals.blueprint_to_signals(player, event, action)
     local cCount = math.ceil( mCount / slots )
     
     -- player.clear_console()
-    -- player.print( "Entities: "    .. eCount )
-    -- player.print( "Modules: "     .. mCount )
-    -- player.print( "Tiles: "       .. tCount )
-    -- player.print( "Combinators: " .. cCount )
+    -- player.print( "Entities: "    .. eCount   )
+    -- player.print( "Modules: "     .. modCount )
+    -- player.print( "Tiles: "       .. tCount   )
+    -- player.print( "Combinators: " .. cCount   )
     -- player.print( "----------" )
     
     -- for k, v in pairs(map) do player.print( k .. ": " .. v ) end
