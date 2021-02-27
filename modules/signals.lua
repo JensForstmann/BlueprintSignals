@@ -98,6 +98,9 @@ function Signals.blueprint_to_signals(player, event, action)
     for _ in pairs(map) do mCount = mCount + 1 end
     
     local slots = game.entity_prototypes["constant-combinator"].item_slot_count
+    if player.mod_settings["BlueprintSignals_signal-limit"].value > 0 then
+        slots = math.min(slots, player.mod_settings["BlueprintSignals_signal-limit"].value)
+    end
     local cCount = math.ceil( mCount / slots )
     
     -- player.clear_console()
@@ -120,7 +123,7 @@ function Signals.blueprint_to_signals(player, event, action)
     entities = {}
     for c = 1, cCount do
         local filters = {}
-        for i = 1, 18 do
+        for i = 1, slots do
             s = s + 1
             if s > sCount then break end
             filters[i] = signals[s]

@@ -20,4 +20,12 @@ data:extend{
         order = 507,
         default_value = true,
     },
+    {
+        type = "int-setting",
+        name = "BlueprintSignals_signal-limit",
+        setting_type = "runtime-per-user",
+        order = 508,
+        default_value = 0,
+        minimum_value = 0,
+    },
 }
