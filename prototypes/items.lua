@@ -5,7 +5,7 @@ data:extend({
     {
         type = "selection-tool",
         name = "BlueprintSignals_cloned-blueprint",
-        icon = "__BlueprintSignals__/graphics/icons/cloned-blueprint.png",
+        icon = "__BlueprintSignals_continued__/graphics/icons/cloned-blueprint.png",
         icon_size = 32,
         subgroup = "tool",
         order = "c[automated-construction]-a[blueprint]-no-picker",

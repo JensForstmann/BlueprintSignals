@@ -7,7 +7,7 @@ local actions = require('actions')
 
 local function icon(s, x, y)
     return {
-        filename = "__BlueprintSignals__/graphics/shortcut-bar-buttons-" .. s .. ".png",
+        filename = "__BlueprintSignals_continued__/graphics/shortcut-bar-buttons-" .. s .. ".png",
         priority = "extra-high-no-scale",
         flags = { "icon" },
         size = s,

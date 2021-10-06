@@ -1,10 +1,10 @@
 {
-    "name": "BlueprintSignals",
-    "version": "0.3.0",
-    "title": "Blueprint Signals",
-    "author": "GaticusHax",
-    "contact": "https://github.com/Haxtorio/BlueprintSignals",
-    "homepage": "https://github.com/Haxtorio/BlueprintSignals",
+    "name": "BlueprintSignals_continued",
+    "version": "0.4.0",
+    "title": "Blueprint Signals (continued)",
+    "author": "Yenz",
+    "contact": "https://github.com/JensForstmann/BlueprintSignals",
+    "homepage": "https://github.com/JensForstmann/BlueprintSignals",
     "factorio_version": "1.1",
     "dependencies": ["base >= 0.18", "(?) BlueprintExtensions >= 0.5"],
     "description": "Read a blueprint and generate a set of combinators containing the item signals and counts."
