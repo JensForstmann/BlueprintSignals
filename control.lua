@@ -6,6 +6,7 @@ local GUI = require('gui')
 local modules = {
     Tempprint = require('modules/tempprint'),
     Signals   = require('modules/signals'),
+    GUI       = require('gui'),
 }
 
 

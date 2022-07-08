@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: ????-??-??
+  Changes:
+    - Conversion button is now shown in mod button flow at top left instead of the mod flow on the left side.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.4.0
 Date: 2021-10-06
   Changes:

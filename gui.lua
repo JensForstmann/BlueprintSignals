@@ -49,36 +49,20 @@ GUI.sorted_actions = sorted_actions
 -- end
 
 function GUI.setup(player)
-    local flow = mod_gui.get_frame_flow(player)
-    local parent
-    -- If BlueprintExtensions is installed, we want to append to its button flow and update only our own buttons. 
-    -- if BlueprintExtensions is not installed, then we just create our own BPEX_Button_Flow
-    if flow.BPEX_Button_Flow then
-        if not game.active_mods["BlueprintExtensions"] then
-            flow.BPEX_Button_Flow.destroy()
-        end
-    end
-    
-    if not flow.BPEX_Button_Flow then
-        flow.add {
-            type = "flow",
-            name = "BPEX_Button_Flow",
-            enabled = true,
-            style = "slot_table_spacing_vertical_flow",
-            direction = "vertical"
-        }
-    end
-    local parent = flow.BPEX_Button_Flow
+    -- Retrieve flow element that contains the mod buttons.
+    local button_flow = mod_gui.get_button_flow(player)
 
+    -- Destroy existing buttons.
     for _, action in ipairs(sorted_actions) do
-        if parent[action.name] then
-            parent[action.name].destroy()
+        if button_flow[action.name] then
+            button_flow[action.name].destroy()
         end
     end
 
+    -- Create action buttons.
     for _, action in ipairs(sorted_actions) do
         if action.icon and player.mod_settings[action.visibility_setting].value then
-            local button = parent.add{
+            local button = button_flow.add{
                 name    = action.name
                ,type    = "sprite-button"
                ,style   = (action.shortcut_style and "shortcut_bar_button_" .. action.shortcut_style) or "shortcut_bar_button"
@@ -88,9 +72,8 @@ function GUI.setup(player)
             }
         end
     end
-    GUI.update_visibility(player, true)
 
-    return parent  -- Might be nil if never created.
+    GUI.update_visibility(player, true)
 end
 
 function GUI.update_visibility(player, force)
@@ -108,9 +91,11 @@ function GUI.update_visibility(player, force)
         return  -- No update needed.
     end
 
-    local flow = mod_gui.get_frame_flow(player).BPEX_Button_Flow
-    if flow then
-        flow.visible = enabled
+    for _, action in pairs(actions) do
+        local button = mod_gui.get_button_flow(player)[action.name]
+        if button then
+            button.visible = enabled
+        end
     end
 
     for name, action in pairs(actions) do
@@ -122,5 +107,31 @@ function GUI.update_visibility(player, force)
     pdata.buttons_enabled = enabled
 end
 
+
+function GUI.on_configuration_changed(data)
+    local frame_flow
+
+    if not data.mod_changes["BlueprintSignals_continued"] then
+        return
+    end
+
+    -- 0.5.0, button moved into better-fitting mod button flow
+    -- element. Some additional logic needs to be employed to avoid
+    -- destroying the flow element if it is in use by Blueprint
+    -- Extensions or its successor.
+    for _, player in pairs(game.players) do
+        frame_flow = mod_gui.get_frame_flow(player)
+        if frame_flow.BPEX_Button_Flow then
+            if not (game.active_mods["BlueprintExtensions"] or game.active_mods["Kux-BlueprintExtensions"]) then
+                frame_flow.BPEX_Button_Flow.destroy()
+            else
+                for _, action in pairs(actions) do
+                    frame_flow.BPEX_Button_Flow[action.name].destroy()
+                    player.print("Destroying action: " .. action.name)
+                end
+            end
+        end
+    end
+end
 
 return GUI
