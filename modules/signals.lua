@@ -31,30 +31,44 @@ local function add_connections( player, connections, other_entity_number )
     if player.mod_settings["BlueprintSignals_connect-green"].value then
         connections[1].green[#connections[1].green+1] = {entity_id=other_entity_number}
     end
-    
+
     return connections
 end
 
 function Signals.blueprint_to_signals(player, event, action)
-    local bp = Util.get_blueprint( player.cursor_stack )
-    if not (bp and bp.is_blueprint_setup()) then
-        return
-    end
+    -- Set-up notification colors.
+    local notification_color = {
+        error = {1, 0, 0, 1},
+        warning = {1, 1, 0, 1}
+    }
 
-    if not bp then
-        player.print( {'bpsignals.error-no_blueprint'} )
+    -- Bail out early if player is not holding a blueprint.
+    if not player.is_cursor_blueprint() then
+        player.print({'bpsignals.error-no_blueprint'}, notification_color.error )
         log( {'bpsignals.error-no_blueprint'} )
         return
     end
-    if not bp.is_blueprint_setup() then
-        player.print( {'bpsignals.error-invalid'} )
+
+    -- Works for blueprints from both inventory and library.
+    local entities = player.get_blueprint_entities() or {}
+
+    -- Works only for blueprints from inventory.
+    local blueprint = Util.get_blueprint(player.cursor_stack)
+
+    if not blueprint then
+        player.print({'bpsignals.warning-blueprint_library'}, notification_color.warning )
+    end
+
+    -- Fetch tiles from inventory blueprint.
+    local tiles = blueprint and blueprint.get_blueprint_tiles() or {}
+
+    -- Bail out if blueprint is empty (library blueprints with only tiles will also appear empty).
+    if #entities == 0 and #tiles == 0 then
+        player.print({'bpsignals.error-invalid'}, notification_color.error)
         log( {'bpsignals.error-invalid'} )
         return
     end
 
-    local entities = bp.get_blueprint_entities()
-    local tiles = bp.get_blueprint_tiles()
-    
     local numEntities = 0
     local numTiles    = 0
 
@@ -81,7 +95,7 @@ function Signals.blueprint_to_signals(player, event, action)
             end
         end
     end
-    
+
     if tiles then
         numTiles = #tiles
         for _, tile in pairs(tiles) do
@@ -96,20 +110,20 @@ function Signals.blueprint_to_signals(player, event, action)
 
     local mCount = 0
     for _ in pairs(map) do mCount = mCount + 1 end
-    
+
     local slots = game.entity_prototypes["constant-combinator"].item_slot_count
     if player.mod_settings["BlueprintSignals_signal-limit"].value > 0 then
         slots = math.min(slots, player.mod_settings["BlueprintSignals_signal-limit"].value)
     end
     local cCount = math.ceil( mCount / slots )
-    
+
     -- player.clear_console()
     -- player.print( "Entities: "    .. eCount   )
     -- player.print( "Modules: "     .. modCount )
     -- player.print( "Tiles: "       .. tCount   )
     -- player.print( "Combinators: " .. cCount   )
     -- player.print( "----------" )
-    
+
     -- for k, v in pairs(map) do player.print( k .. ": " .. v ) end
 
     -- for _, entity in pairs(entities) do
@@ -142,14 +156,21 @@ function Signals.blueprint_to_signals(player, event, action)
             entities[c].connections = add_connections( player, entities[c].connections, entities[b].entity_number )
         end
     end
-    
-    local name  = bp.name
-    local icons = bp.blueprint_icons
-    local label = bp.label
-    local color = bp.label_color
-    
+
+    -- Fallback icon if no icons are set on blueprint, normally required only in case of library blueprints.
+    local fallback_icon = {
+        signal = { type = "item", name = "constant-combinator" },
+        index = 1
+    }
+
+    -- Read blueprint information with fallback in case of library blueprints.
+    local name  = blueprint and blueprint.name or "blueprint"
+    local icons = blueprint and blueprint.blueprint_icons or { fallback_icon }
+    local label = blueprint and blueprint.label or "Blueprint"
+    local color = blueprint and blueprint.label_color or nil
+
     if not player.clear_cursor() then
-        player.print( "[bps] Error: Unable to clear the cursor.")
+        player.print({'error-clear_cursor'}, notification_color.error)
         return
     end
 
@@ -160,7 +181,7 @@ function Signals.blueprint_to_signals(player, event, action)
     if icons then
         stack.blueprint_icons = icons
     end
-    if label then 
+    if label then
         stack.label = label .. " - Network Signals"
     end
     if color then

@@ -77,34 +77,34 @@ function GUI.setup(player)
 end
 
 function GUI.update_visibility(player, force)
-    local pdata = global.playerdata[player.index]
-    if not pdata then
-        pdata = {}
-        global.playerdata[player.index] = pdata
+    -- Set-up player data if not already done so.
+    global.playerdata[player.index] = global.playerdata[player.index] or {}
+
+    local player_data = global.playerdata[player.index]
+    local player_is_holding_blueprint = player.is_cursor_blueprint()
+
+    -- No action required - force has not been requested, and button state already matches desired state.
+    if not force and player_data.buttons_enabled == player_is_holding_blueprint then
+        return
     end
 
-    local bp = (Util.get_blueprint(player.cursor_stack))
-    local enabled = (bp and bp.is_blueprint_setup()) and true or false
-    local was_enabled = pdata.buttons_enabled
-
-    if (not force and was_enabled ~= nil and enabled == was_enabled) then
-        return  -- No update needed.
-    end
-
+    -- Set visibility for all action buttons.
     for _, action in pairs(actions) do
         local button = mod_gui.get_button_flow(player)[action.name]
         if button then
-            button.visible = enabled
+            button.visible = player_is_holding_blueprint
         end
     end
 
+    -- Set visibility for all shortcuts.
     for name, action in pairs(actions) do
         if action.icon then
-            player.set_shortcut_available(name, enabled)
+            player.set_shortcut_available(name, player_is_holding_blueprint)
         end
     end
 
-    pdata.buttons_enabled = enabled
+    -- Store current visibility state for the player.
+    player_data.buttons_enabled = player_is_holding_blueprint
 end
 
 
