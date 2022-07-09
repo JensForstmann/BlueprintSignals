@@ -188,7 +188,7 @@ function Signals.blueprint_to_signals(player, event, action)
         stack.label_color = color
     end
 
-    Tempprint.set_temporary( player )
+    Tempprint.set_signals_blueprint( player, event.tick )
 end
 
 actions['BlueprintSignals_convert'].handler = Signals.blueprint_to_signals

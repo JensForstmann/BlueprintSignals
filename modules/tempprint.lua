@@ -2,7 +2,7 @@
 local Tempprint = {}
 
 
-function Tempprint.set_temporary(player)
+function Tempprint.set_signals_blueprint(player, current_tick)
     -- Makes a note of the item the player is currently holding.  If the cursor stack is cleaned, the item is removed.
     local stack = player.cursor_stack
 
@@ -14,21 +14,26 @@ function Tempprint.set_temporary(player)
         global.playerdata[player.index] = pdata
     end
 
-    pdata.temporary_item = {name=stack.name, item_number=stack.item_number}
+    pdata.temporary_item = {name=stack.name, item_number=stack.item_number, tick=current_tick}
 
     return true
 end
 
 
-function Tempprint.clear_temporary(player)
-    local pdata = global.playerdata[player.index]
-    if not (pdata and pdata.temporary_item) then return end  -- No temporary item to clear
-    pdata.temporary_item = nil
-    return
+function Tempprint.keep_signals_blueprint(player, current_tick)
+    local player_data = global.playerdata[player.index]
+
+    -- Bail out if signals blueprint has not been stored or if we have just finished creating it.
+    if not (player_data and player_data.temporary_item) or player_data.temporary_item.tick == current_tick then
+        return
+    end
+
+    -- Keep the signals blueprint.
+    player_data.temporary_item = nil
 end
 
 
-function Tempprint.nuke_temporary(player)
+function Tempprint.destroy_signals_blueprint(player, event)
     local pdata = global.playerdata[player.index]
     if not (pdata and pdata.temporary_item) then return end  -- No temporary item to clear
     local tempitem = pdata.temporary_item
@@ -47,18 +52,19 @@ end
 
 script.on_event(
         "BlueprintSignals_cleared_cursor_proxy",
-        function(event) return Tempprint.nuke_temporary(game.players[event.player_index]) end
+        function(event) return Tempprint.destroy_signals_blueprint(game.players[event.player_index], event) end
 )
 
 
-local function clear_temporary_event(event)
-    return Tempprint.clear_temporary(game.players[event.player_index])
+local function keep_signals_blueprint_handler(event)
+    return Tempprint.keep_signals_blueprint(game.players[event.player_index], event.tick)
 end
 
 
 Tempprint.events = {
-    [defines.events.on_player_configured_blueprint] = clear_temporary_event,
-    [defines.events.on_player_cursor_stack_changed] = clear_temporary_event
+    [defines.events.on_player_configured_blueprint] = keep_signals_blueprint_handler,
+    [defines.events.on_player_cursor_stack_changed] = keep_signals_blueprint_handler,
+    [defines.events.on_player_set_quick_bar_slot] = keep_signals_blueprint_handler
 }
 
 

@@ -5,6 +5,8 @@ Date: ????-??-??
     - Conversion button is now shown in mod button flow at top left instead of the mod flow on the left side.
   Features:
     - Signals can now be generated from library blueprints as well. Only entities can be read from them (no tiles, and no name/icon information).
+  Bugfixes:
+    - Destruction of (temporary) signal blueprints is now properly handled when player invokes the clear-cursor (Q) control.
 
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.0
