@@ -9,7 +9,7 @@ Blueprint Signals will read a blueprint and convert it to a set of constant comb
 the signals and values of the blueprint items. The combinators can then be connected to a circuit
 or logistic network to request the blueprint items for construction.
 
-This is an addon mod that fully integrates with [Blueprint Extensions](https://mods.factorio.com/mod/BlueprintExtensions) if it is installed.
+This is an addon mod that fully integrates with [Blueprint Extensions (Kux Edition)](https://mods.factorio.com/mod/Kux-BlueprintExtensions) if it is installed.
 It will also work fine as a stand-alone mod if you don't have or want Blueprint Extensions.
 
 

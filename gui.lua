@@ -14,51 +14,10 @@ table.sort(sorted_actions, function(a, b) return a.order < b.order end)
 
 GUI.sorted_actions = sorted_actions
 
-
--- function GUI.setup(player)
-    -- local flow = mod_gui.get_frame_flow(player)
-    -- if flow.BPEX_Button_Flow then
-        -- flow.BPEX_Button_Flow.destroy()
-    -- end
-    -- local parent
-
-    -- for _, action in ipairs(sorted_actions) do
-        -- if action.icon and player.mod_settings[action.visibility_setting].value then
-            -- if not parent then
-                -- parent = flow.add {
-                    -- type = "flow",
-                    -- name = "BPEX_Button_Flow",
-                    -- enabled = true,
-                    -- style = "slot_table_spacing_vertical_flow",
-                    -- direction = "vertical"
-                -- }
-            -- end
-            -- button = parent.add{
-                -- name = action.name,
-                -- type = "sprite-button",
-                -- style = (action.shortcut_style and "shortcut_bar_button_" .. action.shortcut_style) or "shortcut_bar_button",
-                -- sprite = action.name,
-                -- tooltip = { "controls." .. action.name },
-                -- enabled = true,
-            -- }
-        -- end
-    -- end
-    -- GUI.update_visibility(player, true)
-
-    -- return parent  -- Might be nil if never created.
--- end
-
 function GUI.setup(player)
     local flow = mod_gui.get_frame_flow(player)
     local parent
-    -- If BlueprintExtensions is installed, we want to append to its button flow and update only our own buttons. 
-    -- if BlueprintExtensions is not installed, then we just create our own BPEX_Button_Flow
-    if flow.BPEX_Button_Flow then
-        if not game.active_mods["BlueprintExtensions"] then
-            flow.BPEX_Button_Flow.destroy()
-        end
-    end
-    
+
     if not flow.BPEX_Button_Flow then
         flow.add {
             type = "flow",
@@ -111,9 +70,16 @@ function GUI.update_visibility(player, force)
     local flow = mod_gui.get_frame_flow(player).BPEX_Button_Flow
     if flow then
         flow.visible = enabled
+    else
+        GUI.setup(player)
+        return
     end
 
     for name, action in pairs(actions) do
+        if not flow[name] then
+            GUI.setup(player)
+            return
+        end
         if action.icon then
             player.set_shortcut_available(name, enabled)
         end
