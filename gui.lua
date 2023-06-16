@@ -76,11 +76,11 @@ function GUI.update_visibility(player, force)
     end
 
     for name, action in pairs(actions) do
-        if not flow[name] then
-            GUI.setup(player)
-            return
-        end
         if action.icon then
+            if player.mod_settings[action.visibility_setting].value and not flow[name] then
+                GUI.setup(player)
+                return
+            end
             player.set_shortcut_available(name, enabled)
         end
     end

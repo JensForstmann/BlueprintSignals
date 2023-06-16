@@ -98,6 +98,14 @@ end)
 
 
 add_event_handler(
+        defines.events.on_runtime_mod_setting_changed,
+        function(event)
+            GUI.setup(game.players[event.player_index])
+        end
+)
+
+
+add_event_handler(
         defines.events.on_gui_click,
         function(event)
             return dispatch_action(event, actions[event.element.name])
