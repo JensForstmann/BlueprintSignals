@@ -100,7 +100,9 @@ end)
 add_event_handler(
         defines.events.on_runtime_mod_setting_changed,
         function(event)
-            GUI.setup(game.players[event.player_index])
+            if event.player_index ~= nil then
+                GUI.setup(game.players[event.player_index])
+            end
         end
 )
 
