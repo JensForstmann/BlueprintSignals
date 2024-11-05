@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2024-11-05
+  Changes:
+    - Updated for Factorio 2.0 (complete rewrite to get rid of a lot of old code)
+    - Drop mod integration with Blueprint Extensions
+
+  Features:
+    - Add support to convert a complete blueprint book (with all its children and nested books)
+
+---------------------------------------------------------------------------------------------------
 Version: 0.4.3
 Date: 2023-07-21
   Bugfixes:
