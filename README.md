@@ -15,7 +15,7 @@ or logistic network to request the blueprint items for construction.
 
 ## Instructions for a single blueprint
 
-![Shortcut button: Convert blueprint](graphics/icon-bp-64.png)
+![Shortcut button: Convert blueprint](https://raw.githubusercontent.com/JensForstmann/BlueprintSignals/master/graphics/icon-bp-64.png)
 
 While holding a blueprint (or book), press `CTRL+ALT+S` (configurable) to convert it.
 Alternatively press the shortcut button while holding the blueprint.
@@ -28,7 +28,7 @@ and will only convert the active selected blueprint.
 
 ## Instructions for a complete blueprint book
 
-![Shortcut button: Convert blueprint book](graphics/icon-bp-book-64.png)
+![Shortcut button: Convert blueprint book](https://raw.githubusercontent.com/JensForstmann/BlueprintSignals/master/graphics/icon-bp-book-64.png)
 
 Works the same way as for a single blueprint, but the key sequence is `CTRL+SHIFT+ALT+S` (configurable). 
 Alternatively press the shortcut button while holding the blueprint book.
