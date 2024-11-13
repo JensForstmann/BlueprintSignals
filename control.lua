@@ -69,6 +69,10 @@ local function increment_item(item_list, name, quality, count)
         quality = "normal"
     end
 
+    if type(quality) ~= "string" then
+        quality = quality.name
+    end
+
     if count == nil then
         count = 1
     end
@@ -93,24 +97,8 @@ local function convert_bps(player, bps)
     local needed_items = {}
 
     for _, bp in pairs(bps) do
-        for _, bp_entity in pairs(bp.get_blueprint_entities() or {}) do
-            local item_to_place = prototypes.entity[bp_entity.name].items_to_place_this[1]
-            if item_to_place then
-                increment_item(needed_items, item_to_place.name, bp_entity.quality, item_to_place.count)
-            end
-            if bp_entity.items then
-                for _, bp_insert_plan in pairs(bp_entity.items) do
-                    increment_item(needed_items, bp_insert_plan.id.name, bp_insert_plan.id.quality,
-                        #bp_insert_plan.items.in_inventory)
-                end
-            end
-        end
-
-        for _, bp_tile in pairs(bp.get_blueprint_tiles() or {}) do
-            local item_to_place = prototypes.tile[bp_tile.name].items_to_place_this[1]
-            if item_to_place then
-                increment_item(needed_items, item_to_place.name, bp_tile.quality, item_to_place.count)
-            end
+        for _, ctb in pairs(bp.cost_to_build) do
+            increment_item(needed_items, ctb.name, ctb.quality, ctb.count)
         end
     end
 
@@ -138,9 +126,7 @@ local function convert_bps(player, bps)
                         sections = {
                             {
                                 index = 1,
-                                filters = {
-
-                                }
+                                filters = {}
                             }
                         },
                     },
